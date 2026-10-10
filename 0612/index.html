@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2022年“湘艾湘知”优化治疗系列网络会 · 2022年6月12日</title>
+<!--
+  ══════════════════════════════════════════════════════
+  版式：竖版海报整屏铺满做底板
+        上部 = 已结束会议视频区（仅示意，不支持回放）
+        下部 = 会议名称 / 主办方 / 时间
+  ★ 本会议不支持回放
+  ══════════════════════════════════════════════════════
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f6f3ee url('../images/bg.jpg') center / cover no-repeat fixed;
+    height: 100vh; height: 100dvh; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  body::after {
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 46%;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.38) 34%, rgba(255,255,255,.86) 78%);
+    pointer-events: none; z-index: 1;
+  }
+
+  .player {
+    position: relative; width: 100%; aspect-ratio: 16/9; max-height: 44vh;
+    background: #111; overflow: hidden; flex: none; z-index: 2;
+  }
+  /* 不支持回放：中间禁止播放提示 */
+  .no-replay {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .no-replay .ico {
+    width: 58px; height: 58px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.45);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .no-replay .ico::before { content: ""; width: 22px; height: 22px; border: 2px solid rgba(255,255,255,.8); border-radius: 50%; }
+  .no-replay .ico::after { content: ""; position: absolute; width: 2px; height: 28px; background: rgba(255,255,255,.8); transform: rotate(45deg); }
+  .no-replay .txt { font-size: 12px; color: #bbb; letter-spacing: .2em; text-indent: .2em; }
+
+  .live-tag {
+    position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; letter-spacing: .1em; color: #eaeaea;
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(30,30,30,.78); border: 1px solid rgba(255,255,255,.18);
+  }
+  .live-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: #9a9a9a; }
+
+  .viewers {
+    position: absolute; top: calc(12px + env(safe-area-inset-top)); right: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: #eaeaea;
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(30,30,30,.78); border: 1px solid rgba(255,255,255,.18);
+  }
+  .viewers .ico { opacity: .85; }
+
+  .controlbar { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 14px 12px;
+    background: linear-gradient(transparent, rgba(0,0,0,.72)); }
+  .progress { height: 3px; border-radius: 2px; background: rgba(255,255,255,.22); position: relative; }
+  .progress::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 100%;
+    border-radius: 2px; background: rgba(255,255,255,.35); }
+  .times { display: flex; justify-content: space-between; font-size: 10.5px; color: #fff; opacity: .55; margin-top: 6px;
+    font-variant-numeric: tabular-nums; }
+
+  .info {
+    position: relative; z-index: 2;
+    margin-top: auto; text-align: center;
+    padding: 0 24px calc(26px + env(safe-area-inset-bottom));
+    color: #23283f;
+  }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 14px; padding: 6px 18px;
+    font-size: 13.5px; letter-spacing: .28em; text-indent: .28em; color: #ffd98a;
+    border: 1px solid rgba(150,110,35,.65); border-radius: 4px;
+    background: rgba(35,40,63,.9);
+  }
+  h1 { font-size: 21px; line-height: 1.45; font-weight: 800; color: #2a2352;
+    text-shadow: 0 1px 0 rgba(255,255,255,.9), 0 2px 14px rgba(255,255,255,.7); }
+  .org { margin-top: 12px; font-size: 13.5px; color: #3c4157; letter-spacing: .04em;
+    display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .org em { font-style: normal; opacity: .78; }
+  .date { margin-top: 6px; font-size: 13.5px; color: #3c4157;
+    display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .date em { font-style: normal; opacity: .78; }
+
+  @media (min-width: 700px) { h1 { font-size: 26px; } .player { max-width: 820px; margin: 0 auto; } }
+</style>
+</head>
+<body>
+
+  <div class="player">
+    <div class="no-replay">
+      <div class="ico"></div>
+      <div class="txt">不支持回放</div>
+    </div>
+
+    <div class="live-tag"><span class="dot"></span>直播已结束</div>
+    <div class="viewers"><span class="ico">👥</span>参会 35 人次</div>
+
+    <div class="controlbar">
+      <div class="progress"></div>
+      <div class="times"><span>00:00</span><span>02:55:00</span></div>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="status">该会议已结束</div>
+    <h1>2022年“湘艾湘知”<br>优化治疗系列网络会</h1>
+    <p class="org"><em>主办</em>湖南省性病艾滋病防治协会</p>
+    <p class="date"><em>📅</em>2022年6月12日</p>
+  </div>
+
+</body>
+</html>
