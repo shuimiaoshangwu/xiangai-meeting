@@ -6,8 +6,10 @@
 <title>2022年“湘艾湘知”优化治疗系列网络会</title>
 <!--
   ══════════════════════════════════════════════════════
-  布局：上半屏 = 直播黑框（全宽满铺）｜下半屏 = 背景图满铺
-  ★ 换背景图：直接替换 images/bg.jpg（保持文件名不变）
+  版式：竖版海报整屏铺满做底板
+        上部 = 直播视频黑框（全宽压在海报上）
+        下部 = 会议名称 / 主办方 / 时间
+  ★ 换海报图：直接替换 images/bg.jpg（保持文件名不变）
   ══════════════════════════════════════════════════════
 -->
 <style>
@@ -15,30 +17,36 @@
   html, body { height: 100%; }
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-    color: #fff; background: #000;
-    display: flex; flex-direction: column;
+    background: #f6f3ee url('images/bg.jpg') center / cover no-repeat fixed;
     height: 100vh; height: 100dvh; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  /* 底部白色渐变，托住文字，与浅色海报自然融合 */
+  body::after {
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 46%;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.38) 34%, rgba(255,255,255,.86) 78%);
+    pointer-events: none; z-index: 1;
   }
 
-  /* ── 上半屏：直播黑框，全宽满铺 ── */
+  /* ── 视频黑框：全宽压在海报上部 ── */
   .player {
-    position: relative; width: 100%; height: 50vh; height: 50dvh;
-    background: #000; overflow: hidden; flex: none;
+    position: relative; width: 100%; aspect-ratio: 16/9; max-height: 44vh;
+    background: #000; overflow: hidden; flex: none; z-index: 2;
   }
   .playbtn {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%,-58%);
-    width: 74px; height: 74px; border-radius: 50%;
+    width: 72px; height: 72px; border-radius: 50%;
     border: 2px solid rgba(255,255,255,.55);
     background: rgba(255,255,255,.08);
     display: flex; align-items: center; justify-content: center;
   }
   .playbtn::after {
     content: ""; margin-left: 5px;
-    border-left: 24px solid rgba(255,255,255,.9);
-    border-top: 14px solid transparent; border-bottom: 14px solid transparent;
+    border-left: 23px solid rgba(255,255,255,.9);
+    border-top: 13px solid transparent; border-bottom: 13px solid transparent;
   }
-  .playbtn-sub { position: absolute; top: calc(50% + 42px); left: 50%; transform: translateX(-50%);
-    font-size: 12px; letter-spacing: .28em; text-indent: .28em; opacity: .55; }
+  .playbtn-sub { position: absolute; top: calc(50% + 40px); left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: #fff; letter-spacing: .28em; text-indent: .28em; opacity: .55; }
 
   .live-tag {
     position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 12px;
@@ -63,50 +71,50 @@
   .progress { height: 3px; border-radius: 2px; background: rgba(255,255,255,.22); position: relative; }
   .progress::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 100%;
     border-radius: 2px; background: rgba(255,255,255,.65); }
-  .times { display: flex; justify-content: space-between; font-size: 10.5px; opacity: .65; margin-top: 6px;
+  .times { display: flex; justify-content: space-between; font-size: 10.5px; color: #fff; opacity: .65; margin-top: 6px;
     font-variant-numeric: tabular-nums; }
 
-  /* ── 下半屏：背景图满铺 ── */
-  .lower {
-    position: relative; flex: 1; min-height: 0; overflow: hidden;
-    background: #fff url('images/bg.jpg') center / cover no-repeat;
-  }
-  /* 底部渐变保证文字可读 */
-  .lower::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
-    background: linear-gradient(transparent, rgba(6,12,32,.72));
-    pointer-events: none;
-  }
-
-  /* 会议信息叠在图片下半部 */
+  /* ── 下部：会议信息（叠在海报上） ── */
   .info {
-    position: absolute; left: 0; right: 0; bottom: calc(20px + env(safe-area-inset-bottom));
-    z-index: 2; text-align: center; padding: 0 22px;
+    position: relative; z-index: 2;
+    margin-top: auto; text-align: center;
+    padding: 0 24px calc(26px + env(safe-area-inset-bottom));
+    color: #23283f;
   }
   .status {
     display: inline-flex; align-items: center; gap: 8px;
-    margin-bottom: 12px; padding: 6px 18px;
+    margin-bottom: 14px; padding: 6px 18px;
     font-size: 13.5px; letter-spacing: .28em; text-indent: .28em; color: #ffd98a;
-    border: 1px solid rgba(255,217,138,.55); border-radius: 4px;
-    background: rgba(120,90,30,.45);
+    border: 1px solid rgba(150,110,35,.65); border-radius: 4px;
+    background: rgba(35,40,63,.9);
   }
-  h1 { font-size: 21px; line-height: 1.4; font-weight: 700; text-shadow: 0 4px 24px rgba(0,0,0,.6); }
-  .date { margin-top: 8px; font-size: 14px; opacity: .92; letter-spacing: .05em;
-    display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .date em { font-style: normal; opacity: .8; }
+  h1 {
+    font-size: 21px; line-height: 1.45; font-weight: 800; color: #2a2352;
+    text-shadow: 0 1px 0 rgba(255,255,255,.9), 0 2px 14px rgba(255,255,255,.7);
+  }
+  .org {
+    margin-top: 12px; font-size: 13.5px; color: #3c4157; letter-spacing: .04em;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .org em { font-style: normal; opacity: .78; }
+  .date { margin-top: 6px; font-size: 13.5px; color: #3c4157;
+    display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .date em { font-style: normal; opacity: .78; }
 
-  @media (min-width: 700px) { h1 { font-size: 26px; } }
+  @media (min-width: 700px) {
+    h1 { font-size: 26px; }
+    .player { max-width: 820px; margin: 0 auto; }
+  }
 </style>
 </head>
 <body>
 
-  <!-- 上半屏：直播黑框 -->
+  <!-- 视频黑框（压在海报上部） -->
   <div class="player">
     <div class="playbtn"></div>
     <div class="playbtn-sub">回 放</div>
 
     <div class="live-tag"><span class="dot"></span>直播已结束</div>
-
     <div class="viewers"><span class="ico">👥</span>参会 37 人次</div>
 
     <div class="controlbar">
@@ -115,13 +123,12 @@
     </div>
   </div>
 
-  <!-- 下半屏：图片满铺 + 会议信息 -->
-  <div class="lower">
-    <div class="info">
-      <div class="status">该会议已结束</div>
-      <h1>2022年“湘艾湘知”优化治疗系列网络会</h1>
-      <p class="date"><em>📅</em>2022年3月11日</p>
-    </div>
+  <!-- 下部：会议信息 -->
+  <div class="info">
+    <div class="status">该会议已结束</div>
+    <h1>2022年“湘艾湘知”<br>优化治疗系列网络会</h1>
+    <p class="org"><em>主办</em>湖南省性病艾滋病防治协会</p>
+    <p class="date"><em>📅</em>2022年3月11日</p>
   </div>
 
 </body>
